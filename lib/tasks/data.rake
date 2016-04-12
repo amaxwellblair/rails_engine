@@ -9,7 +9,8 @@ namespace :data do
       "customers" => Customer,
       "invoices" => Invoice,
       "items" => Item,
-      "invoice_items" => InvoiceItems
+      "invoice_items" => InvoiceItem,
+      "transactions" => Transaction
     }
     tables.each do |file, model|
       data = CSV.open("./data/" + file + ".csv", headers: true, header_converters: :symbol)

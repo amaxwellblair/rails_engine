@@ -11,6 +11,8 @@ Rails.application.routes.draw do
       get "/items/:id", to: "items#show", as: "item"
       get "/invoice_items/", to: "invoice_items#index"
       get "/invoice_items/:id", to: "invoice_items#show", as: "invoice_item"
+      get "/transactions", to: "transactions#index"
+      get "/transactions/:id", to: "transactions#show", as: "transaction"
     end
   end
 end
