@@ -86,4 +86,16 @@ describe "Merchant API" do
 
     expect(json["error"]).to eq("column does not exist")
   end
+
+  it "Returns a random merchant" do
+    merchant = Merchant.create(name: "Larimer", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+    Merchant.create(name: "Schroeder-Jerde", created_at: "2012-03-27 14:53:59 UTC", updated_at: "2012-03-27 14:53:59 UTC")
+    Merchant.create(name: "Larimer", created_at: "2012-03-27 14:53:15 UTC", updated_at: "2012-03-27 14:53:10 UTC")
+
+    get "/api/v1/merchants/random.json?"
+
+    json = JSON.parse(response.body)
+
+    expect(response).to be_success
+  end
 end
