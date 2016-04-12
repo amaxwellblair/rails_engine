@@ -1,8 +1,8 @@
 module Api
   module V1
-    class CustomersController < ApiController
+    class InvoicesController < ApiController
       def model
-        Customer
+        Invoice
       end
     end
   end
