@@ -5,6 +5,10 @@ Rails.application.routes.draw do
       get "/merchants/:id", to: "merchants#show", as: "merchant"
       get "/customers", to: "customers#index"
       get "/customers/:id", to: "customers#show", as: "customer"
+      get "/invoices", to: "invoices#index"
+      get "/invoices/:id", to: "invoices#show", as: "invoice"
+      get "/items", to: "items#index"
+      get "/items/:id", to: "items#show", as: "item"
     end
   end
 end
