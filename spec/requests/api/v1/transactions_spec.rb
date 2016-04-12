@@ -66,4 +66,21 @@ describe "transaction API" do
 
     expect(response).to be_success
   end
+
+  it "return invoice" do
+    customer = Customer.create(first_name: "John", last_name: "Michaels")
+    customer2 = Customer.create(first_name: "Butter", last_name: "Poptart")
+    merchant = Merchant.create(name: "Bob")
+    invoice1 = Invoice.create(customer_id: customer.id, merchant_id: merchant.id, status: "shipped")
+    invoice2 = Invoice.create(customer_id: customer2.id, merchant_id: merchant.id, status: "shipped")
+    transaction = Transaction.create(invoice_id: invoice1.id, credit_card_number: 4654405418249632, result: "success" )
+    Transaction.create(invoice_id: invoice2.id, credit_card_number: 4580251236515201, result: "failed" )
+
+    get "/api/v1/transactions/#{transaction.id}/invoice.json"
+    json = JSON.parse(response.body)
+
+    expect(response).to be_success
+
+    expect(json["customer_id"]).to eq(customer.id)
+  end
 end

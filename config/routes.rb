@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       get "/transactions/find_all", to: "transactions#find_all", as: "find_all_transactions"
       get "/transactions/random", to: "transactions#random", as: "random_transaction"
       get "/transactions/:id", to: "transactions#show", as: "transaction"
+      get "/transactions/:id/:relation", to: "transactions#relation", as: "transaction_relation"
     end
   end
 end
