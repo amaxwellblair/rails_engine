@@ -18,7 +18,7 @@ module Api
         if model.columns_hash[column].type == :string
           respond_with model.where("lower(#{column}) = ?", params[column].downcase).first
         else
-          respond_with model.find_by(column => params[column])
+          respond_with model.where(column => params[column]).first
         end
       else
         respond_with({error: "column does not exist"}, status: :not_found)

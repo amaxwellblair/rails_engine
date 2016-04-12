@@ -16,7 +16,9 @@ namespace :data do
       data = CSV.open("./data/" + file + ".csv", headers: true, header_converters: :symbol)
       data.each do |row|
         puts "Creating more #{file}..."
-        model.create(row.to_hash)
+        params = row.to_hash
+        params.delete(:credit_card_expiration_date) if params.has_key?(:credit_card_expiration_date)
+        model.create(params)
       end
     end
   end
