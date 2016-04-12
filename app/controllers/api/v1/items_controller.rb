@@ -4,6 +4,10 @@ module Api
       def model
         Item
       end
+
+      def relations
+        ["invoice_items", "merchant"]
+      end
     end
   end
 end
