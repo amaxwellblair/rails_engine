@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get "/merchants", to: "merchants#index"
+      get "/merchants/find", to: "merchants#find", as: "find_merchant"
+      get "/merchants/find_all", to: "merchants#find_all", as: "find_all_merchants"
       get "/merchants/:id", to: "merchants#show", as: "merchant"
       get "/customers", to: "customers#index"
       get "/customers/:id", to: "customers#show", as: "customer"

@@ -4,6 +4,10 @@ module Api
       def model
         Merchant
       end
+
+      def attributes
+        [:id, :name, :updated_at, :created_at]
+      end
     end
   end
 end
