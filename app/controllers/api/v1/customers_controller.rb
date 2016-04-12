@@ -4,6 +4,10 @@ module Api
       def model
         Customer
       end
+
+      def relations
+        ["invoices", "transactions"]
+      end
     end
   end
 end

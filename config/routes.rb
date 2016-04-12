@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       get "/customers/find_all", to: "customers#find_all", as: "find_all_customers"
       get "/customers/random", to: "customers#random", as: "random_customer"
       get "/customers/:id", to: "customers#show", as: "customer"
+      get "/customers/:id/:relation", to: "customers#relation", as: "customer_relation"
 
       get "/invoices", to: "invoices#index"
       get "/invoices/find", to: "invoices#find", as: "find_invoice"
