@@ -54,21 +54,21 @@ describe "invoice_item API" do
     expect(json["quantity"]).to eq(invoice_item.quantity)
   end
 
-  # it "find a specific invoice_items by unit price" do
-  #   customer = Customer.create(first_name: "John", last_name: "Michaels")
-  #   merchant = Merchant.create(name: "Bob")
-  #   item = Item.create(name: "pancake", description: "devil's candy", unit_price: 1000, merchant_id: merchant.id)
-  #   item2 = Item.create(name: "pop over", description: "yummy", unit_price: 6000, merchant_id: merchant.id)
-  #   invoice = Invoice.create(customer_id: customer.id, merchant_id: merchant.id, status: "shipped")
-  #   invoice_item = InvoiceItem.create(item_id: item.id, invoice_id: invoice.id, quantity: 10, unit_price: 1000)
-  #   InvoiceItem.create(item_id: item2.id, invoice_id: invoice.id, quantity: 5, unit_price: 6700)
-  #   InvoiceItem.create(item_id: item.id, invoice_id: invoice.id, quantity: 1, unit_price: 1000)
-  #
-  #   get "/api/v1/invoice_items/find_all.json?unit_price=1000"
-  #   json = JSON.parse(response.body)
-  #
-  #   expect(response).to be_success
-  #
-  #   expect(json.first["quantity"]).to eq(invoice_item.quantity)
-  # end
+  it "find a specific invoice_items by unit price" do
+    customer = Customer.create(first_name: "John", last_name: "Michaels")
+    merchant = Merchant.create(name: "Bob")
+    item = Item.create(name: "pancake", description: "devil's candy", unit_price: 1000, merchant_id: merchant.id)
+    item2 = Item.create(name: "pop over", description: "yummy", unit_price: 6000, merchant_id: merchant.id)
+    invoice = Invoice.create(customer_id: customer.id, merchant_id: merchant.id, status: "shipped")
+    invoice_item = InvoiceItem.create(item_id: item.id, invoice_id: invoice.id, quantity: 10, unit_price: 1000)
+    InvoiceItem.create(item_id: item2.id, invoice_id: invoice.id, quantity: 5, unit_price: 6700)
+    InvoiceItem.create(item_id: item.id, invoice_id: invoice.id, quantity: 1, unit_price: 1000)
+
+    get "/api/v1/invoice_items/find_all.json?unit_price=10.00"
+    json = JSON.parse(response.body)
+
+    expect(response).to be_success
+
+    expect(json.first["quantity"]).to eq(invoice_item.quantity)
+  end
 end
