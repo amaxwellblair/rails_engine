@@ -9,6 +9,8 @@ Rails.application.routes.draw do
       get "/invoices/:id", to: "invoices#show", as: "invoice"
       get "/items", to: "items#index"
       get "/items/:id", to: "items#show", as: "item"
+      get "/invoice_items/", to: "invoice_items#index"
+      get "/invoice_items/:id", to: "invoice_items#show", as: "invoice_item"
     end
   end
 end
