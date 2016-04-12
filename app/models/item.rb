@@ -1,5 +1,6 @@
 class Item < ActiveRecord::Base
   belongs_to :merchant
+  has_many :invoice_items
   before_validation :convert_to_decimal
 
   def convert_to_decimal

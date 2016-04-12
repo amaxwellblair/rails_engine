@@ -82,4 +82,43 @@ describe "items API" do
 
     expect(response).to be_success
   end
+
+  it "returns invoice items" do
+    merchant = Merchant.create(name: "Bob")
+    item = Item.create(name: "pancake", description: "devil's candy", unit_price: 1000, merchant_id: merchant.id)
+    item2 = Item.create(name: "pop over", description: "yummy", unit_price: 6000, merchant_id: merchant.id)
+    Item.create(name: "pancake", description: "Hard as a rock", unit_price: 8989, merchant_id: merchant.id)
+    customer = Customer.create(first_name: "John", last_name: "Michaels")
+    invoice = Invoice.create(customer_id: customer.id, merchant_id: merchant.id, status: "shipped")
+    InvoiceItem.create(item_id: item.id, invoice_id: invoice.id, quantity: 10, unit_price: 1000)
+    InvoiceItem.create(item_id: item2.id, invoice_id: invoice.id, quantity: 5, unit_price: 6700)
+    InvoiceItem.create(item_id: item.id, invoice_id: invoice.id, quantity: 1, unit_price: 500)
+
+    get "/api/v1/items/#{item.id}/invoice_items.json"
+    json = JSON.parse(response.body)
+
+    expect(response).to be_success
+
+    expect(json.length).to eq(2)
+    expect(json.first["quantity"]).to eq(10)
+  end
+
+  it "returns merchant" do
+    merchant = Merchant.create(name: "Bob")
+    item = Item.create(name: "pancake", description: "devil's candy", unit_price: 1000, merchant_id: merchant.id)
+    item2 = Item.create(name: "pop over", description: "yummy", unit_price: 6000, merchant_id: merchant.id)
+    Item.create(name: "pancake", description: "Hard as a rock", unit_price: 8989, merchant_id: merchant.id)
+    customer = Customer.create(first_name: "John", last_name: "Michaels")
+    invoice = Invoice.create(customer_id: customer.id, merchant_id: merchant.id, status: "shipped")
+    InvoiceItem.create(item_id: item.id, invoice_id: invoice.id, quantity: 10, unit_price: 1000)
+    InvoiceItem.create(item_id: item2.id, invoice_id: invoice.id, quantity: 5, unit_price: 6700)
+    InvoiceItem.create(item_id: item.id, invoice_id: invoice.id, quantity: 1, unit_price: 500)
+
+    get "/api/v1/items/#{item.id}/merchant.json"
+    json = JSON.parse(response.body)
+
+    expect(response).to be_success
+
+    expect(json["name"]).to eq("Bob")
+  end
 end
