@@ -71,4 +71,15 @@ describe "items API" do
     expect(json.last["name"]).to eq("pancake")
   end
 
+  it "return random item" do
+    merchant = Merchant.create(name: "Bob")
+    Item.create(name: "pancake", description: "devil's candy", unit_price: 1000, merchant_id: merchant.id)
+    Item.create(name: "pop over", description: "yummy", unit_price: 6000, merchant_id: merchant.id)
+    Item.create(name: "pancake", description: "Hard as a rock", unit_price: 8989, merchant_id: merchant.id)
+
+    get "/api/v1/items/random.json"
+    json = JSON.parse(response.body)
+
+    expect(response).to be_success
+  end
 end
