@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       get "/items", to: "items#index"
       get "/items/find", to: "items#find", as: "find_item"
       get "/items/find_all", to: "items#find_all", as: "find_all_items"
+      get "/items/random", to: "items#random", as: "random_item"
       get "/items/:id", to: "items#show", as: "item"
 
 
