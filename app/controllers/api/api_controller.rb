@@ -15,7 +15,11 @@ module Api
     def find
       column = parse_attributes
       if column
-        respond_with model.find_by(column => params[column])
+        if model.columns_hash[column].type == :string
+          respond_with model.where("lower(#{column}) = ?", params[column].downcase).first
+        else
+          respond_with model.find_by(column => params[column])
+        end
       else
         respond_with({error: "column does not exist"}, status: :not_found)
       end
@@ -24,7 +28,11 @@ module Api
     def find_all
       column = parse_attributes
       if column
-        respond_with model.where(column => params[column])
+        if model.columns_hash[column].type == :string
+          respond_with model.where("lower(#{column}) = ?", params[column].downcase)
+        else
+          respond_with model.where(column => params[column])
+        end
       else
         respond_with({error: "column does not exist"}, status: :not_found)
       end
