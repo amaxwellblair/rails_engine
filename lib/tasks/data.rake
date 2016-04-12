@@ -3,7 +3,7 @@ require "CSV"
 namespace :data do
   desc "loads data into the database"
   task load: :environment do
-    tables = { "merchants" => Merchant, "customers" => Customer}
+    tables = { "merchants" => Merchant, "customers" => Customer, "invoices" => Invoice }
     tables.each do |data, model|
       data = CSV.open("./data/" + data + ".csv", headers: true, header_converters: :symbol)
       data.each do |row|
