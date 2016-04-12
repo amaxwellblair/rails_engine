@@ -15,7 +15,10 @@ Rails.application.routes.draw do
       get "/invoices/:id", to: "invoices#show", as: "invoice"
 
       get "/items", to: "items#index"
+      get "/items/find", to: "items#find", as: "find_item"
+      get "/items/find_all", to: "items#find_all", as: "find_all_items"
       get "/items/:id", to: "items#show", as: "item"
+
 
       get "/invoice_items/", to: "invoice_items#index"
       get "/invoice_items/:id", to: "invoice_items#show", as: "invoice_item"
