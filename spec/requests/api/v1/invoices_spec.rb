@@ -1,5 +1,5 @@
 describe "invoice API" do
-  it "should return a list of customers" do
+  it "should return a list of invoices" do
     customer = Customer.create(first_name: "John", last_name: "Michaels")
     customer2 = Customer.create(first_name: "Butter", last_name: "Poptart")
     merchant = Merchant.create(name: "Bob")
@@ -13,7 +13,7 @@ describe "invoice API" do
     expect(json.first["customer_id"]).to eq(customer.id)
   end
 
-  it "should return a specific customer" do
+  it "should return a specific invoice" do
     customer = Customer.create(first_name: "John", last_name: "Michaels")
     customer2 = Customer.create(first_name: "Butter", last_name: "Poptart")
     merchant = Merchant.create(name: "Bob")

@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       get "/customers/:id", to: "customers#show", as: "customer"
       get "/invoices", to: "invoices#index"
       get "/invoices/:id", to: "invoices#show", as: "invoice"
+      get "/items", to: "items#index"
+      get "/items/:id", to: "items#show", as: "item"
     end
   end
 end
