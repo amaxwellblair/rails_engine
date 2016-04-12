@@ -14,14 +14,11 @@ module Api
 
     def find
       column = parse_attributes
-      if column
-        if model.columns_hash[column].type == :string
-          respond_with model.where("lower(#{column}) = ?", params[column].downcase).take
-        else
-          respond_with model.where(column => params[column]).take
-        end
+      return respond_with_column_error unless column
+      if model.columns_hash[column].type == :string
+        respond_with model.where("lower(#{column}) = ?", params[column].downcase).first
       else
-        respond_with({error: "column does not exist"}, status: :not_found)
+        respond_with model.where(column => params[column]).first
       end
     end
 
