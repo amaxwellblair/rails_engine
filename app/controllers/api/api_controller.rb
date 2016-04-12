@@ -27,14 +27,11 @@ module Api
 
     def find_all
       column = parse_attributes
-      if column
-        if model.columns_hash[column].type == :string
-          respond_with model.where("lower(#{column}) = ?", params[column].downcase)
-        else
-          respond_with model.where(column => params[column])
-        end
+      return respond_with_column_error unless column
+      if model.columns_hash[column].type == :string
+        respond_with model.where("lower(#{column}) = ?", params[column].downcase)
       else
-        respond_with({error: "column does not exist"}, status: :not_found)
+        respond_with model.where(column => params[column])
       end
     end
 
@@ -45,11 +42,8 @@ module Api
     def relation
       element = model.where(id: params[:id]).take
       relationship = parse_relations
-      if element.respond_to?(relationship)
-        respond_with element.send(parse_relations)
-      else
-        respond_with({error: "relation does not exist"}, status: :not_found)
-      end
+      return respond_with_relation_error unless element.respond_to?(relationship)
+      respond_with element.send(parse_relations)
     end
   end
 end

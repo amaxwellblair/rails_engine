@@ -65,4 +65,58 @@ describe "customer API" do
 
     expect(response).to be_success
   end
+
+  it "returns invoices" do
+    customer = Customer.create(first_name: "John", last_name: "Michaels", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+    customer2 = Customer.create(first_name: "John", last_name: "Jackson", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+    Customer.create(first_name: "Parabold", last_name: "Sanderson", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+    merchant = Merchant.create(name: "Bob")
+    invoice = Invoice.create(customer_id: customer.id, merchant_id: merchant.id, status: "shipped")
+    Invoice.create(customer_id: customer2.id, merchant_id: merchant.id, status: "shipped")
+
+    get "/api/v1/customers/#{customer.id}/invoices.json"
+    json = JSON.parse(response.body)
+
+    expect(response).to be_success
+
+    expect(json.length).to eq(1)
+    expect(json.first["customer_id"]).to eq(customer.id)
+  end
+
+  it "returns transactions" do
+    customer = Customer.create(first_name: "John", last_name: "Michaels", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+    customer2 = Customer.create(first_name: "John", last_name: "Jackson", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+    Customer.create(first_name: "Parabold", last_name: "Sanderson", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+    merchant = Merchant.create(name: "Bob")
+    invoice = Invoice.create(customer_id: customer.id, merchant_id: merchant.id, status: "shipped")
+    Invoice.create(customer_id: customer2.id, merchant_id: merchant.id, status: "shipped")
+    Transaction.create(invoice_id: invoice.id, credit_card_number: 4654405418249632, result: "success" )
+    Transaction.create(invoice_id: invoice.id, credit_card_number: 4580251236515201, result: "failed" )
+
+    get "/api/v1/customers/#{customer.id}/transactions.json"
+    json = JSON.parse(response.body)
+
+    expect(response).to be_success
+
+    expect(json.length).to eq(2)
+    expect(json.first["result"]).to eq("success")
+  end
+
+  it "relation sad path" do
+    customer = Customer.create(first_name: "John", last_name: "Michaels", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+    customer2 = Customer.create(first_name: "John", last_name: "Jackson", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+    Customer.create(first_name: "Parabold", last_name: "Sanderson", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+    merchant = Merchant.create(name: "Bob")
+    invoice = Invoice.create(customer_id: customer.id, merchant_id: merchant.id, status: "shipped")
+    Invoice.create(customer_id: customer2.id, merchant_id: merchant.id, status: "shipped")
+    Transaction.create(invoice_id: invoice.id, credit_card_number: 4654405418249632, result: "success" )
+    Transaction.create(invoice_id: invoice.id, credit_card_number: 4580251236515201, result: "failed" )
+
+    get "/api/v1/customers/#{customer.id}/pancakes.json"
+    json = JSON.parse(response.body)
+
+    expect(response.status).to eq(404)
+
+    expect(json["error"]).to eq("relation does not exist")
+  end
 end

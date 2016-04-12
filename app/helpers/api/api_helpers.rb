@@ -15,5 +15,13 @@ module Api
       end
       return relationship
     end
+
+    def respond_with_column_error
+      respond_with({error: "column does not exist"}, status: :not_found)
+    end
+
+    def respond_with_relation_error
+      respond_with({error: "relation does not exist"}, status: :not_found)
+    end
   end
 end
