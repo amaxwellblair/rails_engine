@@ -4,6 +4,7 @@ Rails.application.routes.draw do
       get "/merchants", to: "merchants#index"
       get "/merchants/find", to: "merchants#find", as: "find_merchant"
       get "/merchants/find_all", to: "merchants#find_all", as: "find_all_merchants"
+      get "/merchants/random", to: "merchants#random", as: "random_merchant"
       get "/merchants/:id", to: "merchants#show", as: "merchant"
 
       get "/customers", to: "customers#index"

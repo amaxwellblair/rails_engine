@@ -37,5 +37,9 @@ module Api
         respond_with({error: "column does not exist"}, status: :not_found)
       end
     end
+
+    def random
+      respond_with model.order("RANDOM()").take
+    end
   end
 end
