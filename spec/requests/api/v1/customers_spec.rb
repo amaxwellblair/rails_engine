@@ -1,6 +1,6 @@
 require "rails_helper"
 
-describe "customer endpoints" do
+describe "customer API" do
   it "should return a list of customers" do
     Customer.create(first_name: "John", last_name: "Michaels")
     Customer.create(first_name: "Randy", last_name: "Jackson")
