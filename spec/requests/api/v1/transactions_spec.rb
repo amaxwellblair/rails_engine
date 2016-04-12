@@ -51,7 +51,7 @@ describe "transaction API" do
     expect(json["credit_card_number"]).to eq(transaction.credit_card_number)
   end
 
-  it "finds specific transactions" do
+  it "returns a random transaction" do
     customer = Customer.create(first_name: "John", last_name: "Michaels")
     customer2 = Customer.create(first_name: "Butter", last_name: "Poptart")
     merchant = Merchant.create(name: "Bob")
@@ -61,12 +61,9 @@ describe "transaction API" do
     Transaction.create(invoice_id: invoice2.id, credit_card_number: 4580251236515201, result: "failed" )
     Transaction.create(invoice_id: invoice2.id, credit_card_number: 458035123615201, result: "success" )
 
-    get "/api/v1/transactions/find_all.json?result=success"
+    get "/api/v1/transactions/random.json"
     json = JSON.parse(response.body)
 
     expect(response).to be_success
-
-    expect(json.length).to eq(2)
-    expect(json.last["result"]).to eq("success")
   end
 end
