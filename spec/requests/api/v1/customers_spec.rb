@@ -54,4 +54,15 @@ describe "customer API" do
     expect(json.length).to eq(3)
     expect(json.first["first_name"]).to eq("John")
   end
+
+  it "find a random customer" do
+    Customer.create(first_name: "John", last_name: "Michaels", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+    Customer.create(first_name: "John", last_name: "Jackson", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+    Customer.create(first_name: "Parabold", last_name: "Sanderson", created_at: "2012-03-27 14:53:14 UTC", updated_at: "2012-03-27 14:53:52 UTC")
+
+    get "/api/v1/customers/random.json"
+    json = JSON.parse(response.body)
+
+    expect(response).to be_success
+  end
 end
