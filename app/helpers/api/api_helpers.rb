@@ -7,5 +7,13 @@ module Api
       end
       return column
     end
+
+    def parse_relations
+      relationship = ""
+      relations.each do |relation|
+        relationship = relation if params["relation"] == relation
+      end
+      return relationship
+    end
   end
 end
