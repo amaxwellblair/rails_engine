@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       get "/customers/:id", to: "customers#show", as: "customer"
 
       get "/invoices", to: "invoices#index"
+      get "/invoices/find", to: "invoices#find", as: "find_invoice"
+      get "/invoices/find_all", to: "invoices#find_all", as: "find_all_invoices"
       get "/invoices/:id", to: "invoices#show", as: "invoice"
 
       get "/items", to: "items#index"
@@ -21,6 +23,8 @@ Rails.application.routes.draw do
 
 
       get "/invoice_items/", to: "invoice_items#index"
+      get "/invoice_items/find", to: "invoice_items#find", as: "find_invoice_item"
+      get "/invoice_items/find_all", to: "invoice_items#find_all", as: "find_all_invoice_items"
       get "/invoice_items/:id", to: "invoice_items#show", as: "invoice_item"
 
       get "/transactions", to: "transactions#index"

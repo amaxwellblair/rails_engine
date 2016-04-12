@@ -34,12 +34,12 @@ describe "items API" do
     Item.create(name: "pop over", description: "yummy", unit_price: 6000, merchant_id: merchant.id)
     Item.create(name: "dirt", description: "Hard as a rock", unit_price: 8989, merchant_id: merchant.id)
 
-    get "/api/v1/items/find.json?name=pancake"
+    get "/api/v1/items/find.json?unit_price=89.89"
     json = JSON.parse(response.body)
 
     expect(response).to be_success
 
-    expect(json["name"]).to eq("pancake")
+    expect(json["name"]).to eq("dirt")
   end
 
   it "finds a specific item sad path" do
