@@ -9,6 +9,8 @@ describe "customer API" do
     get "/api/v1/customers.json"
     json = JSON.parse(response.body)
 
+    expect(response).to be_success
+
     expect(json.length).to eq(3)
     expect(json.first["first_name"]).to eq("John")
   end
@@ -21,6 +23,8 @@ describe "customer API" do
     get "/api/v1/customers/#{customer.id}.json"
     json = JSON.parse(response.body)
 
+    expect(response).to be_success
+
     expect(json["first_name"]).to eq(customer.first_name)
   end
 
@@ -32,6 +36,8 @@ describe "customer API" do
     get "/api/v1/customers/find.json?first_name=john"
     json = JSON.parse(response.body)
 
+    expect(response).to be_success
+
     expect(json["first_name"]).to eq("John")
   end
 
@@ -42,6 +48,8 @@ describe "customer API" do
 
     get "/api/v1/customers/find_all.json?created_at=2012-03-27 14:53:14 UTC"
     json = JSON.parse(response.body)
+
+    expect(response).to be_success
 
     expect(json.length).to eq(3)
     expect(json.first["first_name"]).to eq("John")
