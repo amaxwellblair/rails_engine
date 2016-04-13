@@ -8,7 +8,7 @@ Rails.application.routes.draw do
       get "/merchants/most_revenue", to: "merchants#most_revenue", as: "merchants_most_revenue"
       get "/merchants/most_items", to: "merchants#most_items", as: "merchants_most_items"
       get "/merchants/revenue", to: "merchants#revenue_by_date", as: "merchants_revenue_by_date"
-      get "/merchants/favorite_customer", to: "merchants#favorite_customer", as: "merchants_favorite_customer"
+      get "/merchants/:id/favorite_customer", to: "merchants#favorite_customer", as: "merchants_favorite_customer"
       get "/merchants/:id/revenue", to: "merchants#revenue", as: "merchant_revenue"
       get "/merchants/:id", to: "merchants#show", as: "merchant"
       get "/merchants/:id/:relation", to: "merchants#relation", as: "merchant_relation"

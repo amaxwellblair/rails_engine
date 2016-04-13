@@ -27,7 +27,8 @@ module Api
       end
 
       def favorite_customer
-
+        merchant = Merchant.find(params[:id])
+        respond_with merchant.favorite_customer
       end
     end
   end

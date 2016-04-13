@@ -16,6 +16,11 @@ class Merchant < ActiveRecord::Base
     end
   end
 
+  def favorite_customer
+    # invoices.joins(:transactions).where("transactions.result = 'success'").includes(:customer).select("customer.*, COUNT(id) AS count").group("customer.id").order("count desc").first
+    Customer.joins(invoices: [:merchant]).where("invoices.merchant_id = ?", id).select("customers.*, COUNT(customers.id) AS count").group("customers.id").order("count desc").first
+  end
+
   def self.most_items(num)
     joins(invoices: [:transactions, :invoice_items]).where("transactions.result = 'success'").select("merchants.*, SUM(invoice_items.quantity) AS tot").group("merchants.id").order("tot desc").first(num)
   end
